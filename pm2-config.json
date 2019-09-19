@@ -1,0 +1,6 @@
+{
+    "apps" : [{
+        "name"      : "momentum",
+        "script"    : "./app.js"
+    }]
+}
