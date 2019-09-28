@@ -5,10 +5,6 @@ const mainTable = document.querySelector('.table');
 const TODOS = 'toDos';
 const toDos = [];
 
-/**
- * 
- * @param {*} e 
- */
 function compliteTodo(e) {
     if (e.path[1].className === 'strikeout') {
         e.path[1].className = '';
@@ -19,32 +15,17 @@ function compliteTodo(e) {
     }
     saveTodos();
 }
-/**
- *
- */
+
 function deleteTodo(e) {
     e.path[2].remove();
     toDos.pop([e.path[2].id - 1]);
     saveTodos();
 }
 
-/**
- *
- */
 function saveTodos() {
     localStorage.setItem(TODOS, JSON.stringify(toDos));
 }
-/**
- *
- */
-function init() {
-    loadTodo();
-    form.addEventListener('submit', addTodo);
-}
 
-/**
- *
- */
 function loadTodo() {
     const loadTodos = localStorage.getItem(TODOS);
     if (loadTodos) {
@@ -53,21 +34,13 @@ function loadTodo() {
         }
     }
 }
-/**
- *
- * @param {*} e
- */
+
 function addTodo(e) {
     e.preventDefault();
     makeTodo(input.value);
 }
 
-/**
- * 
- * @param {*} value 
- * @param {*} strikeout 
- */
-function makeTodo(value, strikeout) {
+function makeTodo(value, complite) {
     const tr = document.createElement('tr');
     const td1 = document.createElement('td');
     const td2 = document.createElement('td');
@@ -84,7 +57,7 @@ function makeTodo(value, strikeout) {
     tr.id = count;
     tr.append(td1, td2, td3);
     tr.addEventListener('dblclick', compliteTodo);
-    if (strikeout) {
+    if (complite) {
         tr.className = 'strikeout';
         bool = true;
     }
@@ -98,6 +71,11 @@ function makeTodo(value, strikeout) {
     };
     toDos.push(toDoObj);
     saveTodos();
+}
+
+function init() {
+    loadTodo();
+    form.addEventListener('submit', addTodo);
 }
 
 export default {
