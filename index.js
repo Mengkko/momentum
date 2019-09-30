@@ -9,6 +9,7 @@ function init() {
     clock.init();
     weather.init();
     todo.init();
+    calendar.init();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
