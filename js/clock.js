@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 const clock = document.getElementById('clock');
 
 function init() {
@@ -24,4 +25,4 @@ function setTime(v) {
 
 export default {
     init,
-}
+};
