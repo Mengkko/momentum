@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 const form = document.querySelector('#todoForm');
 const input = form.children[0];
 const mainTable = document.querySelector('.table');
