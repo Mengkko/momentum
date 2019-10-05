@@ -2,7 +2,7 @@ const weather = document.getElementById('weather');
 
 function getWeather() {
     fetch(
-        'http://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&appid=d0dbed9f11d7097bfd43f5ceacc27023&units=metric'
+        'https://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&appid=d0dbed9f11d7097bfd43f5ceacc27023&units=metric'
     )
         .then((data) => data.json())
         .then((json) => {
