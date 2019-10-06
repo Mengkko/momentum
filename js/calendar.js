@@ -1,13 +1,26 @@
 /* eslint-disable require-jsdoc */
 const calendar = document.getElementById('calendar');
+const calendarWeek = document.getElementById('calendarWeek');
 const calendarYM = document.getElementById('calendarYM');
+const term = document.getElementsByClassName('term');
 let today = new Date();
 
 function makeCal() {
     buildCalendar(today);
+    buildCalendarWeek(today)
     calendar.addEventListener('click', clickCalendar);
+    for (const i of term) i.addEventListener('click', clickTerm);
 }
 
+function clickTerm(e) {
+    if (e.target.innerText === '주간') {
+        calendar.style.display = 'none';
+        calendarWeek.style.display = '';
+    } else {
+        calendar.style.display = '';
+        calendarWeek.style.display = 'none';
+    }
+}
 function clickCalendar(e) {
     if (e.target.innerText === '>') {
         today = new Date(today.getFullYear(),
@@ -24,6 +37,10 @@ function clickCalendar(e) {
     }
 }
 
+function buildCalendarWeek(today) {
+    const date = new Date()
+    
+}
 function buildCalendar(today) {
     const date = new Date();
     const doMonth = new Date(today.getFullYear(), today.getMonth(), 1);

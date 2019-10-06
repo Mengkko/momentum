@@ -15,28 +15,48 @@
             <caption id="todoList">To Do List</caption>
                 <tr><th>No.</th><th>제목</th><th>삭제</th></tr>
         </table>
-        <table id="calendar" class="table">
-            <tr><!-- label은 마우스로 클릭을 편하게 해줌 -->
-                <th><</th>
-                <th id="calendarYM" colspan="5">
-                yyyy년 m월</th>
-                <th>></th>
-            </tr>
-            <tr>
-                <td align="center"><font color ="red">일</td>
-                <td align="center">월</td>
-                <td align="center">화</td>
-                <td align="center">수</td>
-                <td align="center">목</td>
-                <td align="center">금</td>
-                <td align="center"><font color ="blue">토</td>
-            </tr> 
-        </table>
+        <div class="calendar"></div>
+            <a class="term">주간</a>
+            <a class="term">월간</a>
+            <table id="calendar" class="table">
+                <tr>
+                    <th><</th>
+                    <th id="calendarYM" colspan="5">yyyy년 m월</th>
+                    <th>></th>
+                </tr>
+                <tr align="left">
+                    <td style="text-align: left;"><font color ="red">일</td>
+                    <td>월</td>
+                    <td>화</td>
+                    <td>수</td>
+                    <td>목</td>
+                    <td>금</td>
+                    <td><font color ="blue">토</td>
+                </tr> 
+            </table>
+            <table id="calendarWeek" class="table" style="display: none;">
+                <tr>
+                    <th><</th>
+                    <th id="calendarWeekYM" colspan="5">
+                    yyyy년 m월</th>
+                    <th>></th>
+                </tr>
+                <tr>
+                    <td align="center"><font color ="red">일</td>
+                    <td align="center">월</td>
+                    <td align="center">화</td>
+                    <td align="center">수</td>
+                    <td align="center">목</td>
+                    <td align="center">금</td>
+                    <td align="center"><font color ="blue">토</td>
+                </tr>
+            </table>
+        </div>
     </div>
     <script type="module" src="./index.js"></script>
     <style>
         body {
-            width: 900px;
+            width: 800px;
             margin: 0 auto;
             text-align: center;
         }
