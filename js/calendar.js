@@ -37,18 +37,33 @@ function clickCalendar(e) {
     }
 }
 
-function buildCalendarWeek(today) {
-    const date = new Date()
+function buildCalendarWeek(target) {
+    const year = target.getFullYear();
+    const month = target.getMonth();
+    const day = target.getDay()
+    const date = target.getDate() - day
+    var StartDate = new Date();
+    var EndDate = new Date();
+    StartDate.setHours(0,0,0,0); EndDate.setHours(0,0,0,0);
+    StartDate.setDate(target.getDate() - day);
+    EndDate.setDate(target.getDate()- day + 6);
     
+    console.log(StartDate, EndDate)
+
+    calendarWeekYM.innerHTML = year +
+        '년 ' + (month + 1) + '월';
+
 }
 function buildCalendar(today) {
     const date = new Date();
-    const doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    const doMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 0);
-    const lastDate = new Date(today.getFullYear(), today.getMonth()+1, 0);
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const doMonth = new Date(year, month, 1);
+    const doMonthLastDate = new Date(year, month, 0);
+    const lastDate = new Date(year, month + 1, 0);
     const doMonthLastDay = doMonthLastDate.getDate();
-    calendarYM.innerHTML = today.getFullYear() +
-        '년 ' + (today.getMonth() + 1) + '월';
+    calendarYM.innerHTML = year +
+        '년 ' + (month + 1) + '월';
 
     while (calendar.rows.length > 2) {
         calendar.deleteRow(calendar.rows.length-1);
@@ -86,8 +101,8 @@ function buildCalendar(today) {
             tr.style.verticalAlign = 'top';
             tr.style.textAlign = 'left';
         }
-        if (today.getFullYear() === date.getFullYear() &&
-            today.getMonth() === date.getMonth() &&
+        if (year === date.getFullYear() &&
+            month === date.getMonth() &&
             i === date.getDate()) {
             td.style.backgroundColor = '#84c8f9';
         }
