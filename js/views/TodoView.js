@@ -16,12 +16,20 @@ TodoView.setup = function (el) {
 
 TodoView.render = function(data = []) {
     console.log(data)
-    this.el.innerHTML += data.length ? this.makeTodoHtml(data) : this.messages.NO_KEYWORDS
+    if(data.length) this.tableEl.innerHTML = '<tr><th>No.</th><th>제목</th></tr>' + this.getTodoResultHtml(data)
     this.show()
 }
 
-TodoView.makeTodoHtml = function(data) {
+TodoView.getTodoResultHtml = function(data) {
+    return data.reduce((html, item) => {
+        html += this.getTodoItemHtml(item)
+        return html
+    }, '<tbody>') + '</tbody>'
+}
 
+TodoView.getTodoItemHtml = function(item) {
+    return `<tr><td>${item.keyword}</td>
+        <td>${item.date}</td></tr>`
 }
 
 TodoView.showResetBtn = function (show = true) {

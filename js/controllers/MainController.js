@@ -50,6 +50,7 @@ export default {
   submit(query) {
     TodoView.setValue(query)
     TodoListModel.add(query)
+    this.renderView()
   },
 
   onChangeTab(tabName) {

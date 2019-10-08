@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-const calendar = document.getElementById('calendar');
+const calendarMonth = document.getElementById('calendarMonth');
 const calendarWeek = document.getElementById('calendarWeek');
 const calendarYM = document.getElementById('calendarYM');
 const term = document.getElementsByClassName('term');
@@ -8,16 +8,16 @@ let today = new Date();
 function makeCal() {
     buildCalendar(today);
     buildCalendarWeek(today)
-    calendar.addEventListener('click', clickCalendar);
+    calendarMonth.addEventListener('click', clickCalendar);
     for (const i of term) i.addEventListener('click', clickTerm);
 }
 
 function clickTerm(e) {
     if (e.target.innerText === '주간') {
-        calendar.style.display = 'none';
+        calendarMonth.style.display = 'none';
         calendarWeek.style.display = '';
     } else {
-        calendar.style.display = '';
+        calendarMonth.style.display = '';
         calendarWeek.style.display = 'none';
     }
 }
@@ -65,14 +65,14 @@ function buildCalendar(today) {
     calendarYM.innerHTML = year +
         '년 ' + (month + 1) + '월';
 
-    while (calendar.rows.length > 2) {
-        calendar.deleteRow(calendar.rows.length-1);
+    while (calendarMonth.rows.length > 2) {
+        calendarMonth.deleteRow(calendar.rows.length-1);
     }
 
     let td = null;
     let tr = null;
     let cnt = 0;
-    tr = calendar.insertRow();
+    tr = calendarMonth.insertRow();
 
     for (let i = doMonth.getDay(); i > 0; i--) {
         td = tr.insertCell();
@@ -97,7 +97,7 @@ function buildCalendar(today) {
         if (cnt%7 == 0) {
             td.style.color = 'blue';
             td.innerHTML = i;
-            tr = calendar.insertRow();
+            tr = calendarMonth.insertRow();
             tr.style.verticalAlign = 'top';
             tr.style.textAlign = 'left';
         }

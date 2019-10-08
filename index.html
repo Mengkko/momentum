@@ -8,17 +8,22 @@
     <div id="app">
         <h1 id="clock">00:00</h1>
         <div id="weather"></div>
-        <form id="todoForm">
-            <input type="text" placeholder="To do List">
-        </form>
-        <table class="table">
-            <caption id="todoList">To Do List</caption>
-                <tr><th>No.</th><th>제목</th><th>삭제</th></tr>
-        </table>
-        <div class="calendar"></div>
+        <ul id="tabs" class="tabs">
+            <li>Todo</li>
+            <li>Calendar</li>
+        </ul>
+        <div id="todo">
+            <form id="todoForm">
+                <input type="text" placeholder="To do List">
+                <button type="reset" class="btn-reset"></button>
+            </form>
+            <table id="todoTable" class="table"></table>
+        </div>
+        
+        <div id="calendar">
             <a class="term">주간</a>
             <a class="term">월간</a>
-            <table id="calendar" class="table">
+            <table id="calendarMonth" class="table">
                 <tr>
                     <th><</th>
                     <th id="calendarYM" colspan="5">yyyy년 m월</th>
@@ -53,12 +58,41 @@
             </table>
         </div>
     </div>
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="./js/app.js"></script>
     <style>
         body {
             width: 800px;
             margin: 0 auto;
             text-align: center;
+        }
+        ul.tabs {
+            width: 100%;
+            display: flex;
+            padding: 0 0 0 0;
+        }
+        .tabs li {
+            display: inline-block;
+            width: 50%;
+            padding: 15px;
+            text-align: center;
+            box-sizing: border-box;
+            border-bottom: 1px solid #ccc; 
+            background-color: #eee;
+            color: #999;
+        }
+        .tabs li.active {
+            background-color: #2ac1bc;
+            color: #fff;
+        }
+        .list li {
+            box-sizing: border-box;
+            display: block;
+            padding: 15px;
+            border-bottom: 1px solid #ccc; 
+            position: relative;
+        }
+        .list li:last-child {
+            border-bottom: none;
         }
         #weather {
             margin-bottom: 30px;
@@ -127,7 +161,7 @@
         }
         .table caption{caption-side: bottom; display: none;}
 
-        #calendar tr{
+        #calendarMonth tr{
             height: 100px
         }
     </style>

@@ -1,10 +1,9 @@
 export default {
-    localData : JSON.parse(localStorage.getItem('toDos')),
-
     data : [],
 
     list() {
-        if(this.localData) this.data = this.localData
+        const localData = JSON.parse(localStorage.getItem('toDos'))
+        if(localData) this.data = localData
         return Promise.resolve(this.data)
     },
 
