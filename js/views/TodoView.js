@@ -7,16 +7,18 @@ const TodoView = Object.create(View)
 TodoView.setup = function (el) {
     this.init(el)
     this.inputEl = el.querySelector('[type=text]')
-    this.resetEl = el.querySelector('[type=reset]')
     this.tableEl = el.querySelector('#todoTable')
-    this.showResetBtn(false)
     this.bindEvents()
     return this
 }
 
 TodoView.render = function(data = []) {
     console.log(data)
-    if(data.length) this.tableEl.innerHTML = '<tr><th>No.</th><th>제목</th></tr>' + this.getTodoResultHtml(data)
+    if(data.length) this.tableEl.innerHTML = '<tr><th>날짜</th><th>제목</th><th>삭제</th></tr>' + this.getTodoResultHtml(data)
+    else this.tableEl.innerHTML = ''
+    Array.from(this.el.querySelectorAll('button')).forEach(el => {
+        el.addEventListener('click', e => this.clickDeleteBtn(e))
+    });
     this.show()
 }
 
@@ -27,37 +29,30 @@ TodoView.getTodoResultHtml = function(data) {
     }, '<tbody>') + '</tbody>'
 }
 
-TodoView.getTodoItemHtml = function(item) {
-    return `<tr><td>${item.keyword}</td>
-        <td>${item.date}</td></tr>`
-}
-
-TodoView.showResetBtn = function (show = true) {
-    this.resetEl.style.display = show ? 'block' : 'none'
+TodoView.getTodoItemHtml = function(item,idx) {
+    return `<tr><input type="hidden" value="${item.cnt}"><td>${item.date}</td>
+        <td>${item.keyword}</td>
+        <td><button>❎</button></td></tr>`
 }
 
 TodoView.bindEvents = function () {
     this.on('submit', e => e.preventDefault())
     this.inputEl.addEventListener('keyup', e => this.onKeyup(e))
-    this.resetEl.addEventListener('click', e => this.onClickReset())
 }
 
 TodoView.onKeyup = function (e) {
     const enter = 13
-    this.showResetBtn(this.inputEl.value.length)
-    if (!this.inputEl.value.length) this.emit('@reset')
     if (e.keyCode !== enter) return
     this.emit('@submit', { input: this.inputEl.value })
 }
 
-TodoView.onClickReset = function () {
-    this.emit('@reset')
-    this.showResetBtn(false)
+TodoView.clickDeleteBtn = function (e) {
+    this.emit('@remove', { input: e.target.parentElement.parentElement.children[0] })
 }
 
-TodoView.setValue = function (value = '') {
-    this.inputEl.value = value
-    this.showResetBtn(this.inputEl.value.length)
+
+TodoView.setValue = function () {
+    this.inputEl.value = ''
 }
 
 export default TodoView

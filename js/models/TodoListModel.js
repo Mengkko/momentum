@@ -9,21 +9,25 @@ export default {
 
     add(keyword = '') {
         keyword = keyword.trim()
-        if (!keyword) return 
-        const date = '12.31'
-        if(this.data) {
-            if (this.data.some(item => item.keyword === keyword)) {
-                this.remove(keyword)
-            }
-        } else {
-            
-        }
-        this.data = [{keyword, date}, ...this.data]
+        if (!keyword) return
+
+        const date = new Date()
+        const year = date.getFullYear()
+        const month = date.getMonth() + 1
+        const day = date.getDate()
+        if(month < 10) month = "0" + month
+        if(day < 10) day = "0" + day
+        const today = year + "-" + month + "-" + day
+
+        const cnt = this.data.length + ""
+        this.data = [{keyword, date : today, cnt}, ...this.data]
         localStorage.clear()
         localStorage.setItem('toDos', JSON.stringify(this.data))
     },
 
-    remove(keyword) {
-        this.data = this.data.filter(item => item.keyword !== keyword)
+    remove(cnt) {
+        this.data = this.data.filter(item => item.cnt !== cnt)
+        localStorage.clear()
+        localStorage.setItem('toDos', JSON.stringify(this.data))
     }
 }

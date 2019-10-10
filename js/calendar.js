@@ -6,7 +6,7 @@ const term = document.getElementsByClassName('term');
 let today = new Date();
 
 function makeCal() {
-    buildCalendar(today);
+    buildCalendar(today)
     buildCalendarWeek(today)
     calendarMonth.addEventListener('click', clickCalendar);
     for (const i of term) i.addEventListener('click', clickTerm);

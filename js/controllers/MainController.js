@@ -20,7 +20,7 @@ export default {
 
     TodoView.setup(document.getElementById('todo'))
       .on("@submit", e => this.onSubmit(e.detail.input))
-      .on("@reset", e => this.onResetForm())
+      .on("@remove", e => this.onRemoveTodo(e.detail.input))
 
     CalendarView.setup(document.getElementById('calendar'))
 
@@ -48,7 +48,7 @@ export default {
   },
 
   submit(query) {
-    TodoView.setValue(query)
+    TodoView.setValue()
     TodoListModel.add(query)
     this.renderView()
   },
@@ -63,8 +63,8 @@ export default {
     this.submit(input);
   },
 
-  onResetForm() {
-    console.log(tag, "onResetForm()");
+  onRemoveTodo(input) {
+    TodoListModel.remove(input.value)
     this.renderView();
   },
 }
