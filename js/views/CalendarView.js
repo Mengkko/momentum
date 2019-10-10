@@ -31,6 +31,7 @@ CalendarView.clickTerm = function(e) {
     }
 }
 CalendarView.clickCalendar = function(e, data) {
+    e.preventDefault()
     if (e.target.innerText === '>') {
         this.today = new Date(this.today.getFullYear(),
         this.today.getMonth() + 1, 
