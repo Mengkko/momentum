@@ -13,7 +13,6 @@ TodoView.setup = function (el) {
 }
 
 TodoView.render = function(data = []) {
-    console.log(data)
     if(data.length) this.tableEl.innerHTML = '<tr><th>날짜</th><th>제목</th><th>삭제</th></tr>' + this.getTodoResultHtml(data)
     else this.tableEl.innerHTML = ''
     Array.from(this.el.querySelectorAll('button')).forEach(el => {
