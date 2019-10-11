@@ -11,7 +11,6 @@ CalendarView.setup = function (el) {
     this.calendarYM = document.getElementById('calendarYM');
     this.modal = document.querySelector('.modal')
     this.overlay = this.modal.querySelector('.modal__overlay')
-    this.closeBtn = this.modal.querySelector('button')
     //this.term = document.getElementsByClassName('term');
     this.today = new Date();
 
@@ -22,10 +21,9 @@ CalendarView.render = function(data = []) {
     this.show()
     this.buildCalendar(this.today,data)
     // this.buildCalendarWeek(this.today,data)      주간 아직 구현 못함
+    // for (const i of this.term) i.addEventListener('click', e => this.clickTerm(e));
     this.calendarMonth.addEventListener('click', e => this.clickCalendar(e, data));
-    for (const i of this.term) i.addEventListener('click', e => this.clickTerm(e));
     this.overlay.addEventListener('click', e => this.closeModal(e))
-    //this.closeBtn.addEventListener('click', e => this.closeModal(e))
 }
 
 CalendarView.renderModal = function(data = []) {
