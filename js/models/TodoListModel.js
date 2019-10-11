@@ -50,5 +50,15 @@ export default {
         this.data[idx].complite = this.data[idx].complite ? false : true
         localStorage.clear()
         localStorage.setItem('toDos', JSON.stringify(this.data))
+    },
+
+    modify(input, cnt) {
+        if (!cnt) return
+        const idx = this.data.findIndex(function(el) {
+            return el.cnt === cnt
+        })
+        this.data[idx].keyword = input
+        localStorage.clear()
+        localStorage.setItem('toDos', JSON.stringify(this.data))
     }
 }

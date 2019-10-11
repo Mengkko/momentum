@@ -54,7 +54,6 @@ CalendarView.getTodoItemHtml = function(item) {
 }
 
 CalendarView.closeModal = function(e) {
-    console.log(e)
     this.modal.classList.add('hidden')
 }
 

@@ -22,6 +22,7 @@ export default {
       .on("@submit", e => this.onSubmit(e.detail.input))
       .on("@remove", e => this.onRemoveTodo(e.detail.input))
       .on('@dblclick', e => this.onDblclickTodo(e.detail.input))
+      .on('@modify', e => this.onModifyKeyword(e.detail.input, e.detail.cnt))
 
     CalendarView.setup(document.getElementById('calendar'))
       .on("@click", e => this.onClickDay(e.detail.input))
@@ -80,4 +81,9 @@ export default {
     TodoListModel.complite(input)
     this.renderView()
   },
+
+  onModifyKeyword(input, cnt) {
+    TodoListModel.modify(input, cnt)
+    this.renderView()
+  }
 }
