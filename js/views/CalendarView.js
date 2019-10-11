@@ -12,6 +12,7 @@ CalendarView.setup = function (el) {
     this.modal = document.querySelector('.modal')
     this.overlay = this.modal.querySelector('.modal__overlay')
     //this.term = document.getElementsByClassName('term');
+    this.bindEvent()
     this.today = new Date();
 
     return this
@@ -22,15 +23,19 @@ CalendarView.render = function(data = []) {
     this.buildCalendar(this.today,data)
     // this.buildCalendarWeek(this.today,data)      주간 아직 구현 못함
     // for (const i of this.term) i.addEventListener('click', e => this.clickTerm(e));
-    this.calendarMonth.addEventListener('click', e => this.clickCalendar(e, data));
-    this.overlay.addEventListener('click', e => this.closeModal(e))
 }
 
 CalendarView.renderModal = function(data = []) {
+    this.today = new Date()
     if(data.length) {
         this.modal.querySelector('.modal__content').innerHTML = `<h1>${data[0].date}</h1>` + this.getModalResultHtml(data)
         this.modal.classList.remove('hidden')
     }
+}
+
+CalendarView.bindEvent = function() {
+    this.calendarYM.parentElement.addEventListener('click', e => this.clickCalendar(e));
+    this.overlay.addEventListener('click', e => this.closeModal(e))
 }
 
 CalendarView.getModalResultHtml = function(data) {
@@ -62,18 +67,17 @@ CalendarView.clickTerm = function(e) {
         calendarWeek.style.display = 'none';
     }
 }
-CalendarView.clickCalendar = function(e, data) {
-    e.preventDefault()
+CalendarView.clickCalendar = function(e) {
     if (e.target.innerText === '>') {
         this.today = new Date(this.today.getFullYear(),
         this.today.getMonth() + 1, 
         this.today.getDate());
-        this.buildCalendar(this.today,data);
+        this.buildCalendar(this.today);
     } else if (e.target.innerText === '<') {
         this.today = new Date(this.today.getFullYear(),
         this.today.getMonth() - 1,
         this.today.getDate());
-        this.buildCalendar(this.today,data);
+        this.buildCalendar(this.today);
     } else if ((e.target.innerText + 0) > 1) {
         e.target.children[0].value
         this.emit('@click', { input : e.target.children[0].value })
@@ -100,7 +104,7 @@ CalendarView.calcDate = function(val) {
     return val
 }
 
-CalendarView.buildCalendar = function(today, data) {
+CalendarView.buildCalendar = function(today) {
     const date = new Date();
     const year = today.getFullYear();
     const month = today.getMonth();
@@ -119,6 +123,7 @@ CalendarView.buildCalendar = function(today, data) {
     let tr = null;
     let cnt = 0;
     tr = calendarMonth.insertRow();
+    tr.addEventListener('click', e => this.clickCalendar(e));
     for (let i = doMonth.getDay(); i > 0; i--) {
         const day = doMonthLastDay - (i - 1)
         td = tr.insertCell();
@@ -145,6 +150,7 @@ CalendarView.buildCalendar = function(today, data) {
             td.style.color = 'blue';
             td.innerHTML = i;
             tr = calendarMonth.insertRow();
+            tr.addEventListener('click', e => this.clickCalendar(e));
             tr.style.verticalAlign = 'top';
             tr.style.textAlign = 'left';
         }
