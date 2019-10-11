@@ -21,9 +21,10 @@ export default {
         if(month < 10) month = "0" + month
         if(day < 10) day = "0" + day
         const today = year + "-" + month + "-" + day
+        const complite = false
 
         const cnt = this.data.length + ""
-        this.data = [{keyword, date : today, cnt}, ...this.data]
+        this.data = [{keyword, date : today, cnt, complite}, ...this.data]
         localStorage.clear()
         localStorage.setItem('toDos', JSON.stringify(this.data))
     },
@@ -37,5 +38,14 @@ export default {
     search(date) {
         date = date.trim()
         return Promise.resolve(this.data.filter(item => item.date === date))
+    },
+
+    complite(cnt) {
+        const idx = this.data.findIndex(function(el) {
+            return el.cnt === cnt
+        })
+        this.data[idx].complite = this.data[idx].complite ? false : true
+        localStorage.clear()
+        localStorage.setItem('toDos', JSON.stringify(this.data))
     }
 }

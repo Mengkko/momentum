@@ -8,16 +8,15 @@ TodoView.setup = function (el) {
     this.init(el)
     this.inputEl = el.querySelector('[type=text]')
     this.tableEl = el.querySelector('#todoTable')
-    this.bindEvents()
     return this
 }
 
 TodoView.render = function(data = []) {
-    if(data.length) this.tableEl.innerHTML = '<tr><th>날짜</th><th>제목</th><th>삭제</th></tr>' + this.getTodoResultHtml(data)
+    if(data.length) {
+        this.tableEl.innerHTML = '<tr><th>날짜</th><th>제목</th><th>삭제</th></tr>' + this.getTodoResultHtml(data)
+    }
     else this.tableEl.innerHTML = ''
-    Array.from(this.el.querySelectorAll('button')).forEach(el => {
-        el.addEventListener('click', e => this.clickDeleteBtn(e))
-    });
+    this.bindEvents()
     this.show()
 }
 
@@ -28,15 +27,28 @@ TodoView.getTodoResultHtml = function(data) {
     }, '<tbody>') + '</tbody>'
 }
 
-TodoView.getTodoItemHtml = function(item,idx) {
-    return `<tr><input type="hidden" value="${item.cnt}"><td>${item.date}</td>
+TodoView.getTodoItemHtml = function(item) {
+    let html = '<tr'
+    if(item.complite) html += ' class="strikeout"'
+    return `${html}><input type="hidden" value="${item.cnt}"><td>${item.date}</td>
         <td>${item.keyword}</td>
         <td><button>❎</button></td></tr>`
+}
+
+TodoView.dblClick = function(e) {
+    e.preventDefault()
+    this.emit('@dblclick', { input : e.target.parentElement.children[0].value})
 }
 
 TodoView.bindEvents = function () {
     this.on('submit', e => e.preventDefault())
     this.inputEl.addEventListener('keyup', e => this.onKeyup(e))
+    Array.from(this.el.querySelectorAll('button')).forEach(el => {
+        el.addEventListener('click', e => this.clickDeleteBtn(e))
+    });
+    Array.from(this.tableEl.querySelectorAll('tr')).forEach(el => {
+        el.addEventListener('dblclick', e => this.dblClick(e))
+    })
 }
 
 TodoView.onKeyup = function (e) {

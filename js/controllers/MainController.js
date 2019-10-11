@@ -21,6 +21,7 @@ export default {
     TodoView.setup(document.getElementById('todo'))
       .on("@submit", e => this.onSubmit(e.detail.input))
       .on("@remove", e => this.onRemoveTodo(e.detail.input))
+      .on('@dblclick', e => this.onDblclickTodo(e.detail.input))
 
     CalendarView.setup(document.getElementById('calendar'))
       .on("@click", e => this.onClickDay(e.detail.input))
@@ -73,5 +74,10 @@ export default {
     TodoListModel.search(input).then(data => {
       if(this.selectedTab === "Calendar") CalendarView.renderModal(data)
     })
+  },
+
+  onDblclickTodo(input) {
+    TodoListModel.complite(input)
+    this.renderView()
   },
 }
