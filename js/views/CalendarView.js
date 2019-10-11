@@ -41,8 +41,10 @@ CalendarView.getModalResultHtml = function(data) {
 }
 
 CalendarView.getTodoItemHtml = function(item) {
+    let style = ''
+    if(item.complite) style = 'text-decoration: line-through;'
     return `<li>
-        <p>${item.keyword}</p>
+        <p style="${style}">${item.keyword}</p>
         </li>`
 }
 

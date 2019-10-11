@@ -30,17 +30,20 @@ export default {
     },
 
     remove(cnt) {
+        if (!cnt) return
         this.data = this.data.filter(item => item.cnt !== cnt)
         localStorage.clear()
         localStorage.setItem('toDos', JSON.stringify(this.data))
     },
 
     search(date) {
+        if (!date) return
         date = date.trim()
         return Promise.resolve(this.data.filter(item => item.date === date))
     },
 
     complite(cnt) {
+        if (!cnt) return
         const idx = this.data.findIndex(function(el) {
             return el.cnt === cnt
         })
