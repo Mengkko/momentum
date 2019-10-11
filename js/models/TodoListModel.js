@@ -10,7 +10,6 @@ export default {
     add(keyword = '') {
         keyword = keyword.trim()
         if (!keyword) return
-
         const date = new Date()
         const year = date.getFullYear()
         const month = date.getMonth() + 1
@@ -18,7 +17,7 @@ export default {
         if(month < 10) month = "0" + month
         if(day < 10) day = "0" + day
         const today = year + "-" + month + "-" + day
-
+        
         const cnt = this.data.length + ""
         this.data = [{keyword, date : today, cnt}, ...this.data]
         localStorage.clear()

@@ -9,6 +9,9 @@ CalendarView.setup = function (el) {
     this.calendarMonth = document.getElementById('calendarMonth');
     this.calendarWeek = document.getElementById('calendarWeek');
     this.calendarYM = document.getElementById('calendarYM');
+    this.modal = document.querySelector('.modal')
+    this.overlay = this.modal.querySelector('.modal__overlay')
+    this.closeBtn = this.modal.querySelector('button')
     this.term = document.getElementsByClassName('term');
     this.today = new Date();
 
@@ -18,15 +21,36 @@ CalendarView.setup = function (el) {
 CalendarView.render = function(data = []) {
     this.show()
     this.buildCalendar(this.today,data)
-    this.buildCalendarWeek(this.today,data)
+    // this.buildCalendarWeek(this.today,data)      주간 아직 구현 못함
     this.calendarMonth.addEventListener('click', e => this.clickCalendar(e, data));
     for (const i of this.term) i.addEventListener('click', e => this.clickTerm(e));
+    this.overlay.addEventListener('click', e => this.closeModal(e))
+    //this.closeBtn.addEventListener('click', e => this.closeModal(e))
 }
 
 CalendarView.renderModal = function(data = []) {
     if(data.length) {
-        alert('open modal' + data)
+        this.modal.querySelector('.modal__content').innerHTML = `<h1>${data[0].date}</h1>` + this.getModalResultHtml(data)
+        this.modal.classList.remove('hidden')
     }
+}
+
+CalendarView.getModalResultHtml = function(data) {
+    return data.reduce((html, item) => {
+        html += this.getTodoItemHtml(item)
+        return html
+    }, '<ul>') + '</ul>'
+}
+
+CalendarView.getTodoItemHtml = function(item) {
+    return `<li>
+        <p>${item.keyword}</p>
+        </li>`
+}
+
+CalendarView.closeModal = function(e) {
+    console.log(e)
+    this.modal.classList.add('hidden')
 }
 
 CalendarView.clickTerm = function(e) {
@@ -69,12 +93,13 @@ CalendarView.buildCalendarWeek = function(target) {
 
     calendarWeekYM.innerHTML = year +
         '년 ' + (month + 1) + '월';
-
 }
+
 CalendarView.calcDate = function(val) {
     if(val < 10) val = "0" + val
     return val
 }
+
 CalendarView.buildCalendar = function(today, data) {
     const date = new Date();
     const year = today.getFullYear();
@@ -94,7 +119,6 @@ CalendarView.buildCalendar = function(today, data) {
     let tr = null;
     let cnt = 0;
     tr = calendarMonth.insertRow();
-    console.log(data)
     for (let i = doMonth.getDay(); i > 0; i--) {
         const day = doMonthLastDay - (i - 1)
         td = tr.insertCell();
