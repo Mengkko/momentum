@@ -19,8 +19,9 @@ CalendarView.setup = function (el) {
 }
 
 CalendarView.render = function(data = []) {
+    this.data = data
     this.show()
-    this.buildCalendar(this.today,data)
+    this.buildCalendar(this.today)
     // this.buildCalendarWeek(this.today,data)      주간 아직 구현 못함
     // for (const i of this.term) i.addEventListener('click', e => this.clickTerm(e));
 }
@@ -77,9 +78,8 @@ CalendarView.clickCalendar = function(e) {
         this.today.getMonth() - 1,
         this.today.getDate());
         this.buildCalendar(this.today);
-    } else if ((e.target.innerText + 0) > 1) {
-        e.target.children[0].value
-        this.emit('@click', { input : e.target.children[0].value })
+    } else if (e.target.children[1]) {
+        this.emit('@click', { input : e.target.children[1].value })
     }
 }
 
@@ -118,6 +118,11 @@ CalendarView.buildCalendar = function(today) {
     while (this.calendarMonth.rows.length > 2) {
         this.calendarMonth.deleteRow(this.calendarMonth.rows.length-1);
     }
+    let eventDays = []
+    for(let i of this.data) eventDays.push(i.date)
+    eventDays = eventDays.filter((item, pos, self) => {
+        return self.indexOf(item) === pos
+    })
     let td = null;
     let tr = null;
     let cnt = 0;
@@ -125,22 +130,25 @@ CalendarView.buildCalendar = function(today) {
     tr.addEventListener('click', e => this.clickCalendar(e));
     for (let i = doMonth.getDay(); i > 0; i--) {
         const day = doMonthLastDay - (i - 1)
+        hidden = hidden + this.calcDate(day)
         td = tr.insertCell();
         td.innerHTML = day;
-        td.innerHTML += `<input type="hidden" value="${hidden + this.calcDate(day)}"></input>`
+        if(eventDays.find( el => el === hidden)) td.innerHTML += '<br>✔'
+        td.innerHTML += `<input type="hidden" value="${hidden}"></input>`
         td.style.color = '#ddd';
         td.style.verticalAlign = 'top';
         td.style.textAlign = 'left';
         if (cnt === 0) td.style.color = '#F79DC2';
         cnt = cnt + 1;
     }
-    hidden = year + '-' + this.calcDate(month + 1) + '-'
     for (let i = 1; i <= lastDate.getDate(); i++) {
         td = tr.insertCell();
         td.style.verticalAlign = 'top';
         td.style.textAlign = 'left';
         td.innerHTML = i;
         cnt = cnt + 1;
+        hidden = year + '-' + this.calcDate(month + 1) + '-'
+        hidden = hidden + this.calcDate(i);
         if (cnt % 7 == 1) {
             td.style.color = 'red';
             td.innerHTML = i;
@@ -154,20 +162,23 @@ CalendarView.buildCalendar = function(today) {
             tr.style.textAlign = 'left';
         }
         if (year === date.getFullYear() &&
-            month === date.getMonth() &&
-            i === date.getDate()) {
+        month === date.getMonth() &&
+        i === date.getDate()) {
             td.style.backgroundColor = '#84c8f9';
         }
-        td.innerHTML += `<input type="hidden" value="${hidden + this.calcDate(i)}"></input>`
+        if(eventDays.find( el => el === hidden)) td.innerHTML += '<br>✔'
+        td.innerHTML += `<input type="hidden" value="${hidden}"></input>`
     }
     if (tr.childElementCount != 0) {
         hidden = year + '-' + this.calcDate(month + 2) + '-'
         let dayCnt = 1;
         let cnt = tr.childElementCount;
         while (cnt < 7) {
+            hidden = hidden + this.calcDate(dayCnt)
             td = tr.insertCell();
             td.innerHTML = dayCnt;
-            td.innerHTML += `<input type="hidden" value="${hidden + this.calcDate(dayCnt)}"></input>`
+            if(eventDays.find( el => el === hidden)) td.innerHTML += '<br>✔'
+            td.innerHTML += `<input type="hidden" value="${hidden}"></input>`
             td.style.color = '#ddd';
             dayCnt++;
             cnt++;
