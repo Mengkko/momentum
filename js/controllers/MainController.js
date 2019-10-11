@@ -23,6 +23,7 @@ export default {
       .on("@remove", e => this.onRemoveTodo(e.detail.input))
 
     CalendarView.setup(document.getElementById('calendar'))
+      .on("@click", e => this.onClickDay(e.detail.input))
 
     this.selectedTab = 'Todo'
     this.renderView()
@@ -66,5 +67,11 @@ export default {
   onRemoveTodo(input) {
     TodoListModel.remove(input.value)
     this.renderView();
+  },
+
+  onClickDay(input) {
+    TodoListModel.search(input).then(data => {
+      if(this.selectedTab === "Calendar") CalendarView.renderModal(data)
+    })
   },
 }
