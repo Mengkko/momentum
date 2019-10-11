@@ -12,7 +12,7 @@ CalendarView.setup = function (el) {
     this.modal = document.querySelector('.modal')
     this.overlay = this.modal.querySelector('.modal__overlay')
     this.closeBtn = this.modal.querySelector('button')
-    this.term = document.getElementsByClassName('term');
+    //this.term = document.getElementsByClassName('term');
     this.today = new Date();
 
     return this
