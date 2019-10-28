@@ -59,10 +59,7 @@ CalendarView.closeModal = function(e) {
 }
 
 CalendarView.clickTerm = function(e) {
-    if (e.target.innerText === '주간') {
-        calendarMonth.style.display = 'none';
-        calendarWeek.style.display = '';
-    } else {
+    if (e.target.innerText === '월간') {
         calendarMonth.style.display = '';
         calendarWeek.style.display = 'none';
     }
