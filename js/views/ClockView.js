@@ -1,7 +1,5 @@
 import View from './View.js'
 
-const tag = '[ClockView]'
-
 const ClockView = Object.create(View)
 
 ClockView.setup = function (el) {

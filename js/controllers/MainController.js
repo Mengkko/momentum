@@ -7,8 +7,6 @@ import CalendarView from '../views/CalendarView.js'
 
 import TodoListModel from '../models/TodoListModel.js'
 
-const tag = '[MainController]'
-
 export default {
   init() {
     ClockView.setup(document.getElementById('clock'))
@@ -62,7 +60,6 @@ export default {
   },
 
   onSubmit(input) {
-    console.log(tag, "onSubmit()", input);
     this.submit(input);
   },
 

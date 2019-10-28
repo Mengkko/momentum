@@ -1,7 +1,5 @@
 import View from './View.js'
 
-const tag = '[TabView]'
-
 const TabView = Object.create(View)
 
 TabView.tabNames = {

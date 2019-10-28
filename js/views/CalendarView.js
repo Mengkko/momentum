@@ -1,7 +1,5 @@
 import View from './View.js'
 
-const tag = '[CalendarView]'
-
 const CalendarView = Object.create(View)
 
 CalendarView.setup = function (el) {

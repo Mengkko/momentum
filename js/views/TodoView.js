@@ -1,7 +1,5 @@
 import View from './View.js'
 
-const tag = '[TodoView]'
-
 const TodoView = Object.create(View)
 
 TodoView.setup = function (el) {

@@ -1,7 +1,5 @@
 import View from './View.js'
 
-const tag = '[WeatherView]'
-
 const WeatherView = Object.create(View)
 
 WeatherView.setup = function (el) {
