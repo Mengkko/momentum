@@ -34,7 +34,7 @@ export default {
         this.data = this.data.filter(item => item.cnt !== cnt)
         localStorage.clear()
         localStorage.setItem('toDos', JSON.stringify(this.data))
-    },
+    }, 
 
     search(date) {
         if (!date) return
